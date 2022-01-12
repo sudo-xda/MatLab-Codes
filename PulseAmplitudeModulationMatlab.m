@@ -1,0 +1,36 @@
+clc;
+clear all;
+close all;
+fm= 100;
+fc=1000;
+fs=100*fm;
+t=0:1/fs:4/fm;
+m=1*cos(2*pi*fm*t);
+c=0.5*square(2*pi*fc*t)+0.5;
+s=m.*c;
+subplot(4,1,1);
+plot(t,m);
+title('Message signal');
+xlabel ('Time');
+ylabel('Amplitude');
+subplot(4,1,2);
+plot(t,c);
+title('Carrier signal');
+xlabel('Time');
+ylabel('Amplitude');
+subplot(4,1,3);
+plot(t,s);
+title('Modulated signal');
+xlabel('Time');
+ylabel('Amplitude');
+%demdulated
+d=s.*c;
+filter=fir1(200,fm/fs,'low');
+original_t_signal=conv(filter,d);
+t1=0:1/(length(original_t_signal)-1):1;
+subplot(4,1,4);
+plot(t1,original_t_signal);
+title('demodulated signal');
+xlabel('time');
+ylabel('amplitude');
+
